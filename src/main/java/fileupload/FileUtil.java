@@ -7,6 +7,7 @@ import java.util.Date;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 //파일 업로드와 관련된 기능을 메서드로 정의한 유틸리티 클래스
@@ -66,6 +67,20 @@ public class FileUtil {
 		//변경된 파일명을 반환한다.
 		return newFileName;
 	}
+	
+	//첨부파일 삭제
+	public static void deleteFile(HttpServletRequest req, 
+			String directory, String filename) {
+		//파일이 저장된 디렉토리의 물리적 경로를 가져온다.
+		String sDirectory = req.getServletContext().getRealPath(directory);
+		//저장된 파일의 경로를 통해 File 객체를 성성
+		File file = new File(sDirectory + File.separator +filename);
+		//해당 경로에 파일이 있으면 삭제한다.
+		if(file.exists()) {
+			file.delete();
+		}
+	}
+		
 }
 
 
